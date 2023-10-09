@@ -1,5 +1,4 @@
-
-teamPlayers = [];
+/*teamPlayers = [];
 
 var nbaUrl = "https://api-nba-v1.p.rapidapi.com";
 var nbaSettings = {
@@ -79,3 +78,4 @@ function getPlayerStats() {
 
 getTeam();
 setTimeout(() => {getPlayerStats();}, 1000);
+*/

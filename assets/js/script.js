@@ -35,14 +35,18 @@ function setNBASettings(sentUrl) {
   };
 }
 
+var finished = false;
+
 function getAllTeams() {
   let toSendUrl = "/teams";
   setNBASettings(toSendUrl);
 
   $.ajax(nbaSettings).done(function (response) {
     console.log(response);
-    for(var i = 0; i < response.response.length; i++)
+    for(var i = 0; i < response.response.length; i++){
       allTeams.unshift({teamName: response.response.name, teamId: response.response.id});
+    }
+    finished = true;
   });
 }
 
@@ -115,14 +119,18 @@ function getPlayerImage(player) {
 var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn")
 
+
 showCardBtn.addEventListener("click", function(){
   for(i=0; i < teamPlayers.length; i++){
-  var li = document.createElement("li");
-  li.classList.add("statsList")
-  cardItems.appendChild(li);
-  li.innerHTML = "stats go here (li)" 
+    var li = document.createElement("li");
+    li.classList.add("statsList")
+    cardItems.appendChild(li);
+    li.innerHTML = "stats go here (li)";
+  
   }
 })
+
+
 
 getAllTeams();
 getTeam();

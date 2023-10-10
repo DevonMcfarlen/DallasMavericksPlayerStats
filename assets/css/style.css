@@ -70,9 +70,9 @@ h1{
     background: grey;
 }
 
-.content{
+/*.content{
     height:20vh;
-}
+}*/
 .statsList{
     list-style:none;
     border:2px solid blue;
@@ -88,4 +88,14 @@ h1{
 }
 .main-header{
     margin-top:25px;
+}
+
+.secondheader{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.dropdown{
+    width:20vw;
 }

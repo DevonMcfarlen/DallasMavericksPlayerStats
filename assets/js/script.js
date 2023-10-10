@@ -103,6 +103,25 @@ function getPlayerStats() {
   });
 }
 
+<<<<<<< HEAD
+getTeam();
+setTimeout(() => {getPlayerStats();}, 1000);
+setTimeout(() => {getPlayerStats();}, 5000); 
+
+var cardItems = document.querySelector(".card-items");
+var showCardBtn = document.querySelector(".showBtn")
+
+showCardBtn.addEventListener("click", function(){
+  for(i=0; i < teamPlayers.length; i++){
+  var li = document.createElement("li");
+  li.classList.add("statsList")
+  cardItems.appendChild(li);
+  li.innerHTML = "stats go here (li)" 
+  }
+})
+
+
+=======
 function getPlayerImage(player) {
   let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
   setBingSettings(toSendUrl);
@@ -118,3 +137,4 @@ getAllTeams();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);
+>>>>>>> d93f6f71a8663e3931a2e6df8c2a12bd6a9bb2a6

@@ -112,28 +112,62 @@ var cardImage = document.querySelector(".player-card");
 
 var finished = false;
 
-function getPlayerImage(player) {
-  let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname;
-  setBingSettings(toSendUrl);
+async function getPlayerImage(player) {
+    let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
+    setBingSettings(toSendUrl);
 
-  var playerImage = "";
+    var playerImage = "";
 
-  $.ajax(bingSettings).done(function (response) {
+    $.ajax(bingSettings).done(function (response) {
     console.log(response);
-    finished = true;
-    playerImage = response.value[0].contentUrl
+    if (response.value && response.value.length > 0) {
+      resolve(response.value[0].contentUrl);
+    } else {
+      console.log("No image found for player");
+    }
+    
+    //finished = true;
+    //playerImage = response.value[0].contentUrl
 
   });
-  return playerImage
-};
-
-
-function displayPlayerImage (player) {
-    var imageDisplay = document.createElement('img');
-    var playerImage = getPlayerImage(player)
-    setTimeout(() => {imageDisplay.setAttribute('src', playerImage)}, 5000);
-    setTimeout(() => {cardImage.append(imageDisplay)}, 5000);
 }
+    //return playerImage;
+
+async function displayPlayerImage(player) {
+  try {
+    var playerImage = await getPlayerImage(player);
+    if (playerImage) {
+    var imageDisplay = document.createElement('img');
+    imageDisplay.setAttribute('src', playerImage);
+    cardImage.appendChild(imageDisplay);
+  }
+}   catch (error) {
+      console.log(error);
+}
+}
+
+
+showCardBtn.addEventListener("click", function(){
+  for(i=0; i < teamPlayers.length; i++){
+  var li = document.createElement("li");
+  li.classList.add("statsList")
+  cardItems.appendChild(li);
+  li.innerHTML = "stats go here (li)"
+  displayPlayerImage();
+  // displayPlayerImage(teamPlayers[i]);
+  // li.appendChild(cardImage);
+  }
+})
+
+
+
+getAllTeams();
+
+getTeam();
+//setTimeout(() => {getPlayerStats();}, 1000);
+//setTimeout(() => {getPlayerStats();}, 5000);
+//setTimeout(() => {getPlayerImage(0);}, 1000);
+
 
 /*
   for var (i = 0; i < teamPlayers.length; i++) {
@@ -153,23 +187,3 @@ function displayPlayerImage (player) {
   }
 });
 */
-
-showCardBtn.addEventListener("click", function(){
-  for(i=0; i < teamPlayers.length; i++){
-  var li = document.createElement("li");
-  li.classList.add("statsList")
-  cardItems.appendChild(li);
-  li.innerHTML = "stats go here (li)"
-  displayPlayerImage(teamPlayers[i]);
-  li.appendChild(cardImage);
-  }
-})
-
-
-
-getAllTeams();
-
-getTeam();
-//setTimeout(() => {getPlayerStats();}, 1000);
-//setTimeout(() => {getPlayerStats();}, 5000);
-//setTimeout(() => {getPlayerImage(0);}, 1000);

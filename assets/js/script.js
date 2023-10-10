@@ -94,4 +94,18 @@ function getPlayerStats() {
 
 getTeam();
 setTimeout(() => {getPlayerStats();}, 1000);
-setTimeout(() => {getPlayerStats();}, 5000);
+setTimeout(() => {getPlayerStats();}, 5000); 
+
+var cardItems = document.querySelector(".card-items");
+var showCardBtn = document.querySelector(".showBtn")
+
+showCardBtn.addEventListener("click", function(){
+  for(i=0; i < teamPlayers.length; i++){
+  var li = document.createElement("li");
+  li.classList.add("statsList")
+  cardItems.appendChild(li);
+  li.innerHTML = "stats go here (li)" 
+  }
+})
+
+

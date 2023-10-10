@@ -25,9 +25,9 @@ Link to the webpage:
 
 ## Authors
 
-Devon McFarlen (https://github.com/DevonMcfarlen)<br>
-Jae Kim (https://github.com/Jaek23)<br>
-Prayusha Pandey (https://github.com/prayushapandey04)<br>
+[Prayusha Pandey](https://github.com/prayushapandey04)<br>
+[Devon McFarlen](https://github.com/DevonMcfarlen)<br>
+[Jae Kim](https://github.com/Jaek23)<br>
 
 ## License
 

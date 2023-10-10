@@ -1,4 +1,4 @@
-const bingSettings = {
+/* const bingSettings = {
 	async: true,
 	crossDomain: true,
 	url: 'https://bing-image-search1.p.rapidapi.com/images/search?q=bread',
@@ -27,3 +27,4 @@ const nbaSettings = {
 $.ajax(nbaSettings).done(function (response) {
 	console.log(response);
 });
+*/

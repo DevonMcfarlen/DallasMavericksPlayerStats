@@ -1,19 +1,18 @@
-/*
-const bingSettings = {
-	async: true,
-	crossDomain: true,
-	url: 'https://bing-image-search1.p.rapidapi.com/images/search?q=bread',
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '09e77c0237msh7cf79c6d0985d69p119f9cjsnb5866ab39fe8',
-		'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
-	}
-};
+var bingSettings = {};
 
-$.ajax(bingSettings).done(function (response) {
-	console.log(response);
-});
-*/
+function setBingSettings(sentUrl) {
+  bingUrl = "https://bing-image-search1.p.rapidapi.com/images/search?q=" + sentUrl;
+  bingSettings = {
+    async: true,
+    crossDomain: true,
+    url: bingUrl,
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '09e77c0237msh7cf79c6d0985d69p119f9cjsnb5866ab39fe8',
+      'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
+    },
+  };
+}
 
 teamPlayers = [];
 var userTeam = 8; //this is a temporary value, it will be changed from user input
@@ -92,6 +91,16 @@ function getPlayerStats() {
   });
 }
 
+function getPlayerImage(player) {
+  let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
+  setBingSettings(toSendUrl);
+
+  $.ajax(bingSettings).done(function (response) {
+    console.log(response);
+  });
+}
+
 getTeam();
 setTimeout(() => {getPlayerStats();}, 1000);
 setTimeout(() => {getPlayerStats();}, 5000);
+setTimeout(() => {getPlayerImage(0);}, 1000);

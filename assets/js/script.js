@@ -1,21 +1,21 @@
-/*
-const bingSettings = {
-	async: true,
-	crossDomain: true,
-	url: 'https://bing-image-search1.p.rapidapi.com/images/search?q=bread',
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '09e77c0237msh7cf79c6d0985d69p119f9cjsnb5866ab39fe8',
-		'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
-	}
-};
+var bingSettings = {};
 
-$.ajax(bingSettings).done(function (response) {
-	console.log(response);
-});
-*/
+function setBingSettings(sentUrl) {
+  bingUrl = "https://bing-image-search1.p.rapidapi.com/images/search?q=" + sentUrl;
+  bingSettings = {
+    async: true,
+    crossDomain: true,
+    url: bingUrl,
+    method: 'GET',
+    headers: {
+      'X-RapidAPI-Key': '09e77c0237msh7cf79c6d0985d69p119f9cjsnb5866ab39fe8',
+      'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
+    },
+  };
+}
 
-teamPlayers = [];
+var allTeams = [];
+var teamPlayers = [];
 var userTeam = 8; //this is a temporary value, it will be changed from user input
 var userSeason = 2022; //this is a temporary value, it will be changed from the user input
 var userPlayer = 3; //this is a temporary value, it will be changed from user input
@@ -33,6 +33,17 @@ function setNBASettings(sentUrl) {
       "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
     },
   };
+}
+
+function getAllTeams() {
+  let toSendUrl = "/teams";
+  setNBASettings(toSendUrl);
+
+  $.ajax(nbaSettings).done(function (response) {
+    console.log(response);
+    for(var i = 0; i < response.response.length; i++)
+      allTeams.unshift({teamName: response.response.name, teamId: response.response.id});
+  });
 }
 
 function getTeam() {
@@ -92,6 +103,7 @@ function getPlayerStats() {
   });
 }
 
+<<<<<<< HEAD
 getTeam();
 setTimeout(() => {getPlayerStats();}, 1000);
 setTimeout(() => {getPlayerStats();}, 5000); 
@@ -109,3 +121,20 @@ showCardBtn.addEventListener("click", function(){
 })
 
 
+=======
+function getPlayerImage(player) {
+  let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
+  setBingSettings(toSendUrl);
+
+  $.ajax(bingSettings).done(function (response) {
+    console.log(response);
+  });
+}
+
+getAllTeams();
+
+//getTeam();
+//setTimeout(() => {getPlayerStats();}, 1000);
+//setTimeout(() => {getPlayerStats();}, 5000);
+//setTimeout(() => {getPlayerImage(0);}, 1000);
+>>>>>>> d93f6f71a8663e3931a2e6df8c2a12bd6a9bb2a6

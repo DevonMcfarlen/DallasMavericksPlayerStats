@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 /*var bingSettings = {};
-=======
-
-var bingSettings = {};
->>>>>>> d7ac397add5554bbceb230c50eb3d9cb88b0687d
 
 function setBingSettings(sentUrl) {
   bingUrl = "https://bing-image-search1.p.rapidapi.com/images/search?q=" + sentUrl;
@@ -109,19 +104,6 @@ function getPlayerStats() {
     console.log(playerStorage);
   });
 }
-
-<<<<<<< HEAD
-function getPlayerImage(player) {
-  let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
-  setBingSettings(toSendUrl);
-
-  $.ajax(bingSettings).done(function (response) {
-    console.log(response);
-  });
-}
-=======
-var cardItems = document.querySelector(".card-items");
-var showCardBtn = document.querySelector(".showBtn");
 var cardImage = document.querySelector(".player-card");
 
 var finished = false;
@@ -167,29 +149,6 @@ function displayPlayerImage (player) {
   }
 });
 */
-
-showCardBtn.addEventListener("click", function(){
-  for(i=0; i < teamPlayers.length; i++){
-  var li = document.createElement("li");
-  li.classList.add("statsList")
-  cardItems.appendChild(li);
-  li.innerHTML = "stats go here (li)"
-  displayPlayerImage(teamPlayers[i]);
-  li.appendChild(cardImage);
-  }
-})
-
-
->>>>>>> d7ac397add5554bbceb230c50eb3d9cb88b0687d
-
-getAllTeams();
-
-getTeam();
-//setTimeout(() => {getPlayerStats();}, 1000);
-//setTimeout(() => {getPlayerStats();}, 5000);
-<<<<<<< HEAD
-//setTimeout(() => {getPlayerImage(0);}, 1000);*/
-
 
 var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn")
@@ -239,6 +198,17 @@ showCardBtn.addEventListener("click", function(){
   }
 }) 
 
-=======
+showCardBtn.addEventListener("click", function(){
+  displayPlayerImage(teamPlayers[i]);
+  li.appendChild(cardImage);
+  }
+)
+
+
+
+//getAllTeams();
+
+//getTeam();
+//setTimeout(() => {getPlayerStats();}, 1000);
+//setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);
->>>>>>> d7ac397add5554bbceb230c50eb3d9cb88b0687d

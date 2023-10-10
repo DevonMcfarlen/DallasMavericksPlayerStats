@@ -50,7 +50,6 @@ h1{
 .flip-card .back{
     transform:rotateX(180deg);
     color:000;
-    /*background:#fff;*/
 }
 .flipInput{
     display:none;
@@ -59,20 +58,15 @@ h1{
 :checked + .flip-card{
     transform:rotateX(180deg);
 }
-/*label:hover :checked + .flip-card{
-    transform:rotateX(175deg);
-    /*box-shadow: 0 20px 20px rgba(255, 255, 255, 0.2);
-}*/
+
 
 .flip-card{
     width:20vw;
     height:20vh;
     background: grey;
+    margin:20px; 
 }
 
-/*.content{
-    height:20vh;
-}*/
 .statsList{
     list-style:none;
     border:2px solid blue;
@@ -98,4 +92,7 @@ h1{
 }
 .dropdown{
     width:20vw;
+}
+li{
+    list-style: none;
 }

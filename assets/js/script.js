@@ -1,5 +1,4 @@
-
-var bingSettings = {};
+/*var bingSettings = {};
 
 function setBingSettings(sentUrl) {
   bingUrl = "https://bing-image-search1.p.rapidapi.com/images/search?q=" + sentUrl;
@@ -105,9 +104,6 @@ function getPlayerStats() {
     console.log(playerStorage);
   });
 }
-
-var cardItems = document.querySelector(".card-items");
-var showCardBtn = document.querySelector(".showBtn");
 var cardImage = document.querySelector(".player-card");
 
 var finished = false;
@@ -154,22 +150,65 @@ function displayPlayerImage (player) {
 });
 */
 
+var cardItems = document.querySelector(".card-items");
+var showCardBtn = document.querySelector(".showBtn")
+
+function createCards(){
+  var label = document.createElement("label");
+  var input = document.createElement("input");
+
+  input.setAttribute("type","checkbox")
+  input.setAttribute("class", "flipInput")
+  label.appendChild(input)
+
+  var card = document.createElement("div");
+  card.setAttribute("class","flip-card");
+  label.appendChild(card);
+
+  var first = document.createElement("div");
+  first.setAttribute("class","front")
+  card.appendChild(first);
+
+  var frontHeader = document.createElement("h2");
+  frontHeader.innerHTML = " front stats"
+  first.appendChild(frontHeader);
+  var frontP = document.createElement("p");
+  frontP.innerHTML = " front stats"
+  first.appendChild(frontP);
+
+  var second = document.createElement("div");
+  second.setAttribute("class","back");
+  card.appendChild(second);
+
+  var backHeader = document.createElement("h2");
+  backHeader.innerHTML = " back stats"
+  second.appendChild(backHeader);
+  var backP = document.createElement("p");
+  backP.innerHTML = " back stats"
+  second.appendChild(backP);
+
+  var li = document.createElement("li")
+  li.appendChild(label);
+  cardItems.appendChild(li);
+  }
+
 showCardBtn.addEventListener("click", function(){
   for(i=0; i < teamPlayers.length; i++){
-  var li = document.createElement("li");
-  li.classList.add("statsList")
-  cardItems.appendChild(li);
-  li.innerHTML = "stats go here (li)"
+    createCards()
+  }
+}) 
+
+showCardBtn.addEventListener("click", function(){
   displayPlayerImage(teamPlayers[i]);
   li.appendChild(cardImage);
   }
-})
+)
 
 
 
-getAllTeams();
+//getAllTeams();
 
-getTeam();
+//getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);

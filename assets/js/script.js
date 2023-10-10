@@ -41,7 +41,8 @@ function getAllTeams() {
 
   $.ajax(nbaSettings).done(function (response) {
     console.log(response);
-    allTeams.unshift({teamName: response.response.name, teamId: response.response.id});
+    for(var i = 0; i < response.response.length; i++)
+      allTeams.unshift({teamName: response.response.name, teamId: response.response.id});
   });
 }
 

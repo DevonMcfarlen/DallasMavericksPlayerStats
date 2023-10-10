@@ -11,8 +11,8 @@ User's can look at the stats for all the Players displayed on the page, and can 
 
 ## Technologies Used
 
-[Bing Image Search API](https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/bing-image-search1/) <br>
 [NBA Documentation API](https://rapidapi.com/api-sports/api/api-nba/) <br>
+[Bing Image Search API](https://rapidapi.com/microsoft-azure-org-microsoft-cognitive-services/api/bing-image-search1/) <br>
 [Semantic UI](https://semantic-ui.com/usage/layout.html) <br>
 [Font Joy](https://fontjoy.com) <br>
 [jQuery](https://jqueryui.com/) <br>

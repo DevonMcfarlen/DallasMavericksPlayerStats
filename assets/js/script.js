@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 /*var bingSettings = {};
+=======
+
+var bingSettings = {};
+>>>>>>> d7ac397add5554bbceb230c50eb3d9cb88b0687d
 
 function setBingSettings(sentUrl) {
   bingUrl = "https://bing-image-search1.p.rapidapi.com/images/search?q=" + sentUrl;
@@ -21,6 +26,8 @@ var userSeason = 2022; //this is a temporary value, it will be changed from the 
 var userPlayer = 3; //this is a temporary value, it will be changed from user input
 var nbaUrl = "https://api-nba-v1.p.rapidapi.com";
 var nbaSettings = {};
+
+
 
 function setNBASettings(sentUrl) {
   nbaUrl = "https://api-nba-v1.p.rapidapi.com" + sentUrl;
@@ -103,6 +110,7 @@ function getPlayerStats() {
   });
 }
 
+<<<<<<< HEAD
 function getPlayerImage(player) {
   let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
   setBingSettings(toSendUrl);
@@ -111,12 +119,75 @@ function getPlayerImage(player) {
     console.log(response);
   });
 }
+=======
+var cardItems = document.querySelector(".card-items");
+var showCardBtn = document.querySelector(".showBtn");
+var cardImage = document.querySelector(".player-card");
+
+var finished = false;
+
+function getPlayerImage(player) {
+  let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname;
+  setBingSettings(toSendUrl);
+
+  var playerImage = "";
+
+  $.ajax(bingSettings).done(function (response) {
+    console.log(response);
+    finished = true;
+    playerImage = response.value[0].contentUrl
+
+  });
+  return playerImage
+};
+
+
+function displayPlayerImage (player) {
+    var imageDisplay = document.createElement('img');
+    var playerImage = getPlayerImage(player)
+    setTimeout(() => {imageDisplay.setAttribute('src', playerImage)}, 5000);
+    setTimeout(() => {cardImage.append(imageDisplay)}, 5000);
+}
+
+/*
+  for var (i = 0; i < teamPlayers.length; i++) {
+
+  }
+    var imageUrl = response.value[0].contentUrl;
+
+    var img = document.createElement("img");
+    img.src = imageUrl;
+
+    var cardItems = document.querySelectorAll(".card-items li");
+    if (cardItems[index]) {
+      cardItems[index].appendChild(img);
+    } else {
+      console.log('No image found for player ' + teamPlayers[player].firstname + '' + teamPlayers[player].lastname);
+    }
+  }
+});
+*/
+
+showCardBtn.addEventListener("click", function(){
+  for(i=0; i < teamPlayers.length; i++){
+  var li = document.createElement("li");
+  li.classList.add("statsList")
+  cardItems.appendChild(li);
+  li.innerHTML = "stats go here (li)"
+  displayPlayerImage(teamPlayers[i]);
+  li.appendChild(cardImage);
+  }
+})
+
+
+>>>>>>> d7ac397add5554bbceb230c50eb3d9cb88b0687d
 
 getAllTeams();
 
 getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
+<<<<<<< HEAD
 //setTimeout(() => {getPlayerImage(0);}, 1000);*/
 
 
@@ -168,3 +239,6 @@ showCardBtn.addEventListener("click", function(){
   }
 }) 
 
+=======
+//setTimeout(() => {getPlayerImage(0);}, 1000);
+>>>>>>> d7ac397add5554bbceb230c50eb3d9cb88b0687d

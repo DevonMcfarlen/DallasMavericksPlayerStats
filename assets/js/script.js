@@ -103,10 +103,14 @@ function getPlayerStats() {
   });
 }
 
-<<<<<<< HEAD
-getTeam();
-setTimeout(() => {getPlayerStats();}, 1000);
-setTimeout(() => {getPlayerStats();}, 5000); 
+function getPlayerImage(player) {
+  let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
+  setBingSettings(toSendUrl);
+
+  $.ajax(bingSettings).done(function (response) {
+    console.log(response);
+  });
+}
 
 var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn")
@@ -120,21 +124,9 @@ showCardBtn.addEventListener("click", function(){
   }
 })
 
-
-=======
-function getPlayerImage(player) {
-  let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
-  setBingSettings(toSendUrl);
-
-  $.ajax(bingSettings).done(function (response) {
-    console.log(response);
-  });
-}
-
 getAllTeams();
+getTeam();
 
-//getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);
->>>>>>> d93f6f71a8663e3931a2e6df8c2a12bd6a9bb2a6

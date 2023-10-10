@@ -56,9 +56,6 @@ function getTeam() {
   $.ajax(nbaSettings).done(function (response) {
     console.log(response);
     teamPlayers = response.response;
-    teamPlayers.forEach(function (player) {
-      getPlayerImage(player);
-    })
   });
 }
 
@@ -109,25 +106,70 @@ function getPlayerStats() {
   });
 }
 
+var cardItems = document.querySelector(".card-items");
+var showCardBtn = document.querySelector(".showBtn");
+var cardImage = document.querySelector(".player-card");
+
+var finished = false;
 
 function getPlayerImage(player) {
-  let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
+  let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname;
   setBingSettings(toSendUrl);
+
+  var playerImage = "";
 
   $.ajax(bingSettings).done(function (response) {
     console.log(response);
-
-    var imageUrl = response.value[0].contentUrl;
-
-    var playerName = player.firstname + ' ' + player.lastname;
-   
+    finished = true;
+    playerImage = response.value[0].contentUrl
 
   });
+  return playerImage
+};
+
+
+function displayPlayerImage (player) {
+    var imageDisplay = document.createElement('img');
+    var playerImage = getPlayerImage(player)
+    setTimeout(() => {imageDisplay.setAttribute('src', playerImage)}, 5000);
+    setTimeout(() => {cardImage.append(imageDisplay)}, 5000);
 }
+
+/*
+  for var (i = 0; i < teamPlayers.length; i++) {
+
+  }
+    var imageUrl = response.value[0].contentUrl;
+
+    var img = document.createElement("img");
+    img.src = imageUrl;
+
+    var cardItems = document.querySelectorAll(".card-items li");
+    if (cardItems[index]) {
+      cardItems[index].appendChild(img);
+    } else {
+      console.log('No image found for player ' + teamPlayers[player].firstname + '' + teamPlayers[player].lastname);
+    }
+  }
+});
+*/
+
+showCardBtn.addEventListener("click", function(){
+  for(i=0; i < teamPlayers.length; i++){
+  var li = document.createElement("li");
+  li.classList.add("statsList")
+  cardItems.appendChild(li);
+  li.innerHTML = "stats go here (li)"
+  displayPlayerImage(teamPlayers[i]);
+  li.appendChild(cardImage);
+  }
+})
+
+
 
 getAllTeams();
 
-//getTeam();
+getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);

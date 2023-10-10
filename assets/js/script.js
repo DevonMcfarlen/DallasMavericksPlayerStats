@@ -14,7 +14,8 @@ function setBingSettings(sentUrl) {
   };
 }
 
-teamPlayers = [];
+var allTeams = [];
+var teamPlayers = [];
 var userTeam = 8; //this is a temporary value, it will be changed from user input
 var userSeason = 2022; //this is a temporary value, it will be changed from the user input
 var userPlayer = 3; //this is a temporary value, it will be changed from user input
@@ -32,6 +33,16 @@ function setNBASettings(sentUrl) {
       "x-rapidapi-host": "api-nba-v1.p.rapidapi.com"
     },
   };
+}
+
+function getAllTeams() {
+  let toSendUrl = "/teams";
+  setNBASettings(toSendUrl);
+
+  $.ajax(nbaSettings).done(function (response) {
+    console.log(response);
+    allTeams.unshift({teamName: response.response.name, teamId: response.response.id});
+  });
 }
 
 function getTeam() {
@@ -100,7 +111,9 @@ function getPlayerImage(player) {
   });
 }
 
-getTeam();
-setTimeout(() => {getPlayerStats();}, 1000);
-setTimeout(() => {getPlayerStats();}, 5000);
-setTimeout(() => {getPlayerImage(0);}, 1000);
+getAllTeams();
+
+//getTeam();
+//setTimeout(() => {getPlayerStats();}, 1000);
+//setTimeout(() => {getPlayerStats();}, 5000);
+//setTimeout(() => {getPlayerImage(0);}, 1000);

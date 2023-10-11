@@ -64,14 +64,14 @@ var playerStats = {
 };
 
 var playerStorage = [];
-
+console.log(playerStorage)
 function getPlayerStats() {
   if(playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}))
   {
     console.log("found duplicate player");
     return;
   }
-    
+ 
   let toSendUrl = "/players/statistics" + "?" + "id=" + teamPlayers[userPlayer].id + "&season=" + userSeason;
   setNBASettings(toSendUrl);
 
@@ -172,6 +172,14 @@ for(let i = 0; i < 5; i++){
 }
 });
 
+cardItems.addEventListener("click", function(event){
+  var target = event.target;
+  if(target.getAttribute('class') === "flipInput"){
+   console.log(target.getAttribute("data-field"))
+    
+  }
+})
+
 getAllTeams();
 getTeam();
 
@@ -229,6 +237,46 @@ function makeCard(i){
 var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn")
 
+function createCards(){
+  var label = document.createElement("label");
+  var input = document.createElement("input");
+  input.setAttribute("data-field", i);
+  
+  input.setAttribute("type","checkbox")
+  input.setAttribute("class", "flipInput")
+  label.appendChild(input)
+
+  var card = document.createElement("div");
+  card.setAttribute("class","flip-card");
+  label.appendChild(card);
+
+  var first = document.createElement("div");
+  first.setAttribute("class","front")
+  card.appendChild(first);
+
+  var frontHeader = document.createElement("h2");
+  frontHeader.innerHTML = " front stats"
+  first.appendChild(frontHeader);
+  var frontP = document.createElement("p");
+  frontP.innerHTML = " front stats"
+  first.appendChild(frontP);
+
+  var second = document.createElement("div");
+  second.setAttribute("class","back");
+  card.appendChild(second);
+
+  var backHeader = document.createElement("h2");
+  backHeader.innerHTML = " back stats"
+  second.appendChild(backHeader);
+  var backP = document.createElement("p");
+  //backP.innerHTML
+  second.appendChild(backP);
+
+  var li = document.createElement("li")
+  li.appendChild(label);
+  cardItems.appendChild(li);
+  }
+
 showCardBtn.addEventListener("click", function(){
   for(let i = 0; i < 3; i++){
     makeCard(i);
@@ -250,17 +298,37 @@ for(i=0; i < teamPlayers.length; i++){
     li.appendChild(cardImage);
   for(i=0; i < teamPlayers.length; i++){
     createCards()
+    renderData()
   }
 }) 
 
+cardItems.addEventListener("click", function(event){
+  if(target.getAttribute('class') === "flipInput"){
+    getPlayerStats(teamPlayers[i])
+    
+  }
+})
+
+
+/*
 showCardBtn.addEventListener("click", function(){
   displayPlayerImage(teamPlayers[i]);
   li.appendChild(cardImage);
   }
 )
+*/
 
 
+
+getAllTeams();
+
+getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);
-*/
+
+function renderStats(){
+  getPlayerStats(teamPlayers[i])
+}
+
+if(playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}));

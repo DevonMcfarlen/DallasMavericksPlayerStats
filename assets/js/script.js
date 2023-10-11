@@ -41,7 +41,6 @@ function getTeam() {
   setNBASettings(toSendUrl);
 
   return $.ajax(nbaSettings).done(function (response) {
-    console.log(response);
     teamPlayers = response.response;
   });
 }
@@ -95,9 +94,7 @@ function getPlayerImage(player) {
   let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname + '+from+espn.com+bio';
   setBingSettings(toSendUrl);
 
-  return $.ajax(bingSettings).done(function (response) {
-    console.log(response);
-  });
+  return $.ajax(bingSettings).done(function (response) {});
 }
 
 var cardItems = document.querySelector(".card-items");
@@ -105,67 +102,68 @@ var showCardBtn = document.querySelector(".showBtn")
 
 function makeCards(i){
   setTimeout(() => {
-    var player = teamPlayers[i];
-    getPlayerImage(player).then( response => {
-      var label = document.createElement("label");
-      var input = document.createElement("input");
+  var player = teamPlayers[i];
+  getPlayerImage(player).then( response => {
+    var label = document.createElement("label");
+    var input = document.createElement("input");
 
-      label.setAttribute("id", "parent")
-      input.setAttribute("type","checkbox");
-      input.setAttribute("class", "flipInput");
-      input.setAttribute("data-field", i);
-      label.appendChild(input);
+    label.setAttribute("id", "parent")
+    input.setAttribute("type","checkbox");
+    input.setAttribute("class", "flipInput");
+    input.setAttribute("data-field", i);
+    label.appendChild(input);
 
-      var card = document.createElement("div");
-      card.setAttribute("class","flip-card");
-      label.appendChild(card);
+    var card = document.createElement("div");
+    card.setAttribute("class","flip-card");
+    label.appendChild(card);
 
-      var first = document.createElement("div");
-      first.setAttribute("class","front")
-      card.appendChild(first);
+    var first = document.createElement("div");
+    first.setAttribute("class","front")
+    card.appendChild(first);
 
-      var frontHeader = document.createElement("h2");
-      frontHeader.innerHTML = player.firstname + " " + player.lastname;
-      first.appendChild(frontHeader);
+    var frontHeader = document.createElement("h2");
+    frontHeader.innerHTML = player.firstname + " " + player.lastname;
+    first.appendChild(frontHeader);
 
-      var frontP = document.createElement("p");
-      if(player.leagues.standard.jersey == null)
-        frontP.innerHTML = "No Jersey # Available";
-      else
-        frontP.innerHTML = "Jersey #: " + player.leagues.standard.jersey;
-      first.appendChild(frontP);
+    var frontP = document.createElement("p");
+    if(player.leagues.standard.jersey == null)
+      frontP.innerHTML = "No Jersey # Available";
+    else
+      frontP.innerHTML = "Jersey #: " + player.leagues.standard.jersey;
+    first.appendChild(frontP);
 
-      var cardImage = document.createElement('img');
-      cardImage.setAttribute('src', response.value[0].contentUrl);
-      cardImage.setAttribute('class', 'card-image');
-      first.appendChild(cardImage);  
+    var cardImage = document.createElement('img');
+    cardImage.setAttribute('src', response.value[0].contentUrl);
+    cardImage.setAttribute('class', 'card-image');
+    first.appendChild(cardImage);  
 
-      var second = document.createElement("div");
-      second.setAttribute("class","back");
-      card.appendChild(second);
+    var second = document.createElement("div");
+    second.setAttribute("class","back");
+    card.appendChild(second);
 
-      var backHeader = document.createElement("h2");
-      backHeader.innerHTML = "Average Season Stats"
-      second.appendChild(backHeader);
-      var backP = document.createElement("p");
-      second.appendChild(backP);
+    var backHeader = document.createElement("h2");
+    backHeader.innerHTML = "Average Season Stats"
+    second.appendChild(backHeader);
+    var backP = document.createElement("p");
+    second.appendChild(backP);
 
-      var li = document.createElement("li")
-      li.appendChild(label);
-      cardItems.appendChild(li);
-      });
-    }, 370*i);
-  }
+    var li = document.createElement("li")
+    li.appendChild(label);
+    cardItems.appendChild(li);
+    });
+  }, 370*i);
+}
 
 showCardBtn.addEventListener("click", function(event){
   userSeason = selection[0].children[0].getAttribute('value');
-  console.log(userSeason);
-  cardItems.innerHTML = "";
-  playerStorage = [];
-  getTeam().then( response => {
-    for(let i = 0; i < teamPlayers.length; i++){
-      makeCards(i);
-  }});
+  if(userSeason !== ""){
+    cardItems.innerHTML = "";
+    playerStorage = [];
+    getTeam().then( response => {
+      for(let i = 0; i < teamPlayers.length; i++){
+        makeCards(i);
+    }});
+  }
 });
 
 cardItems.addEventListener("click", function(event){
@@ -174,12 +172,11 @@ cardItems.addEventListener("click", function(event){
     var userPlayer = target.getAttribute('data-field');
     getPlayerStats(userPlayer).then( response => {
       var backOfCardText = target.parentElement.children[1].children[1].children[1];
-      console.log(playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}).stats);
       var stats = playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}).stats;
       backOfCardText.innerHTML = "Average Points: " + stats.aPoints + "<br>" +
-                                "Average Assists: " + stats.aAssists + "<br>" +
-                                "Average Rebounds: " + stats.aTotReb + "<br>" +
-                                "Average FGP: " + stats.aFGP + "<br>";
+                                 "Average Assists: " + stats.aAssists + "<br>" +
+                                 "Average Rebounds: " + stats.aTotReb + "<br>" +
+                                 "Average FGP: " + stats.aFGP + "<br>";
     });
   }
 })

@@ -8,7 +8,7 @@ function setBingSettings(sentUrl) {
     url: bingUrl,
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': '09e77c0237msh7cf79c6d0985d69p119f9cjsnb5866ab39fe8',
+      'X-RapidAPI-Key': 'bc0130d05cmsh21fde0ce708a855p193539jsn96a834534fe7',
       'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
     },
   };
@@ -21,7 +21,6 @@ var userSeason = 2022; //this is a temporary value, it will be changed from the 
 var userPlayer = 3; //this is a temporary value, it will be changed from user input
 var nbaUrl = "https://api-nba-v1.p.rapidapi.com";
 var nbaSettings = {};
-
 
 function setNBASettings(sentUrl) {
   nbaUrl = "https://api-nba-v1.p.rapidapi.com" + sentUrl;
@@ -97,56 +96,143 @@ function getPlayerStats() {
     playerStats.aFGP = tFGP/pGLength;
 
     playerStorage.unshift({id: response.parameters.id, stats: playerStats});
-
+    
     console.log(response);
     console.log(playerStats);
     console.log(playerStorage);
   });
 }
-var cardImage = document.querySelector(".player-card");
 
-var finished = false;
+var cardItems = document.querySelector(".card-items");
+var showCardBtn = document.querySelector(".showBtn");
 
 function getPlayerImage(player) {
   let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname;
   setBingSettings(toSendUrl);
 
-  var playerImage = "";
-
-  $.ajax(bingSettings).done(function (response) {
+  return $.ajax(bingSettings).done(function (response) {
     console.log(response);
-    finished = true;
-    playerImage = response.value[0].contentUrl
-
   });
-  return playerImage
-};
-
-function displayPlayerImage (player) {
-    var imageDisplay = document.createElement('img');
-    var playerImage = getPlayerImage(player)
-    setTimeout(() => {imageDisplay.setAttribute('src', playerImage)}, 5000);
-    setTimeout(() => {cardImage.append(imageDisplay)}, 5000);
 }
 
-/*
-  for var (i = 0; i < teamPlayers.length; i++) {
+function makeCards(i){
+  setTimeout(() => {
+    getPlayerImage(teamPlayers[i]).then( response => {
+      var label = document.createElement("label");
+      var input = document.createElement("input");
 
-  }
-    var imageUrl = response.value[0].contentUrl;
+      input.setAttribute("type","checkbox");
+      input.setAttribute("class", "flipInput");
+      input.setAttribute("data-field", i);
+      label.appendChild(input);
 
-    var img = document.createElement("img");
-    img.src = imageUrl;
+      var card = document.createElement("div");
+      card.setAttribute("class","flip-card");
+      label.appendChild(card);
 
-    var cardItems = document.querySelectorAll(".card-items li");
-    if (cardItems[index]) {
-      cardItems[index].appendChild(img);
-    } else {
-      console.log('No image found for player ' + teamPlayers[player].firstname + '' + teamPlayers[player].lastname);
-    }
-  }
+      var first = document.createElement("div");
+      first.setAttribute("class","front")
+      card.appendChild(first);
+
+      var frontHeader = document.createElement("h2");
+      frontHeader.innerHTML = " front stats"
+      first.appendChild(frontHeader);
+      var frontP = document.createElement("p");
+      frontP.innerHTML = " front stats"
+      first.appendChild(frontP);
+
+      var second = document.createElement("div");
+      second.setAttribute("class","back");
+      card.appendChild(second);
+
+      var backHeader = document.createElement("h2");
+      backHeader.innerHTML = " back stats"
+      second.appendChild(backHeader);
+      var backP = document.createElement("p");
+      //backP.innerHTML
+      second.appendChild(backP);
+
+      var li = document.createElement("li")
+      li.appendChild(label);
+      cardItems.appendChild(li);
+
+      var cardImage = document.createElement('img');
+      cardImage.setAttribute('src', response.value[0].contentUrl);
+      cardImage.setAttribute("class", "card-image");
+      first.appendChild(cardImage);  
+    });
+  }, 334*i);
+}
+
+showCardBtn.addEventListener("click", function(){
+cardItems.innerHTML = "";
+playerStorage = [];
+for(let i = 0; i < 5; i++){
+  makeCards(i);
+}
 });
-*/
+
+cardItems.addEventListener("click", function(event){
+  var target = event.target;
+  if(target.getAttribute('class') === "flipInput"){
+   console.log(target.getAttribute("data-field"))
+    
+  }
+})
+
+getAllTeams();
+getTeam();
+
+
+/*
+function makeCard(i){
+  setTimeout(() => {
+    getPlayerImage(teamPlayers[i]).then( response => {
+    var cardImage = document.createElement("img")
+    cardImage.setAttribute('src', response.value[0].contentUrl)
+    cardImage.classList.add("card-image");
+    var label = document.createElement("label");
+    var input = document.createElement("input");
+
+    input.setAttribute("type","checkbox")
+    input.setAttribute("class", "flipInput")
+    label.appendChild(input);
+
+  
+    var card = document.createElement("div");
+    card.setAttribute("class","flip-card");
+    label.appendChild(card);
+  
+    var first = document.createElement("div");
+    first.setAttribute("class","front")
+    card.appendChild(first);
+  
+    var frontHeader = document.createElement("h2");
+    frontHeader.innerHTML = " front stats"
+    first.appendChild(frontHeader);
+    var frontP = document.createElement("p");
+    frontP.innerHTML = " front stats"
+    first.appendChild(frontP);
+    first.appendChild(cardImage);
+  
+    var second = document.createElement("div");
+    second.setAttribute("class","back");
+    card.appendChild(second);
+
+    var backHeader = document.createElement("h2");
+    backHeader.innerHTML = " back stats"
+    second.appendChild(backHeader);
+    var backP = document.createElement("p");
+    backP.innerHTML = " back stats"
+    second.appendChild(backP);
+
+    var li = document.createElement("li")
+    li.appendChild(label);
+    cardItems.appendChild(li);
+
+    });
+  }, 334*i);
+}
 
 var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn")
@@ -192,6 +278,24 @@ function createCards(){
   }
 
 showCardBtn.addEventListener("click", function(){
+  for(let i = 0; i < 3; i++){
+    makeCard(i);
+  }
+});
+
+
+
+
+/* old code 
+for(i=0; i < teamPlayers.length; i++){
+    var li = document.createElement("li");
+    li.classList.add("statsList")
+    cardItems.appendChild(li);
+    li.innerHTML = "stats go here (li)"
+    displayPlayerImage(teamPlayers[i]);
+
+    //displayPlayerImage(teamPlayers[i]);
+    li.appendChild(cardImage);
   for(i=0; i < teamPlayers.length; i++){
     createCards()
     renderData()

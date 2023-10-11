@@ -1,4 +1,4 @@
-/*var bingSettings = {};
+var bingSettings = {};
 
 function setBingSettings(sentUrl) {
   bingUrl = "https://bing-image-search1.p.rapidapi.com/images/search?q=" + sentUrl;
@@ -198,17 +198,25 @@ showCardBtn.addEventListener("click", function(){
   }
 }) 
 
+cardItems.addEventListener("click", function(event){
+  if(event.target.getAttribute('class') === "front"){
+    console.log(event.target.getAttribute('class'));
+  }
+})
+
+/*
 showCardBtn.addEventListener("click", function(){
   displayPlayerImage(teamPlayers[i]);
   li.appendChild(cardImage);
   }
 )
+*/
 
 
 
 //getAllTeams();
 
-//getTeam();
+getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);

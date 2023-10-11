@@ -12,7 +12,7 @@ function setBingSettings(sentUrl) {
       'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
     },
   };
-}
+}*/
 
 var allTeams = [];
 var teamPlayers = [];
@@ -42,7 +42,7 @@ function getAllTeams() {
   setNBASettings(toSendUrl);
 
   $.ajax(nbaSettings).done(function (response) {
-    console.log(response);
+    //console.log(response);
     for(var i = 0; i < response.response.length; i++)
       allTeams.unshift({teamName: response.response.name, teamId: response.response.id});
   });
@@ -53,7 +53,7 @@ function getTeam() {
   setNBASettings(toSendUrl);
 
   $.ajax(nbaSettings).done(function (response) {
-    console.log(response);
+    //console.log(response);
     teamPlayers = response.response;
   });
 }
@@ -66,14 +66,14 @@ var playerStats = {
 };
 
 var playerStorage = [];
-
+console.log(playerStorage)
 function getPlayerStats() {
   if(playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}))
   {
     console.log("found duplicate player");
     return;
   }
-    
+ 
   let toSendUrl = "/players/statistics" + "?" + "id=" + teamPlayers[userPlayer].id + "&season=" + userSeason;
   setNBASettings(toSendUrl);
 
@@ -122,7 +122,6 @@ function getPlayerImage(player) {
   });
   return playerImage
 };
-
 
 function displayPlayerImage (player) {
     var imageDisplay = document.createElement('img');
@@ -184,7 +183,7 @@ function createCards(){
   backHeader.innerHTML = " back stats"
   second.appendChild(backHeader);
   var backP = document.createElement("p");
-  backP.innerHTML = " back stats"
+  //backP.innerHTML
   second.appendChild(backP);
 
   var li = document.createElement("li")
@@ -214,7 +213,7 @@ showCardBtn.addEventListener("click", function(){
 
 
 
-//getAllTeams();
+getAllTeams();
 
 getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);

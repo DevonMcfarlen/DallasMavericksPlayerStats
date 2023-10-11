@@ -115,70 +115,128 @@ function getPlayerImage(player) {
   });
 }
 
+function makeCards(i){
+  setTimeout(() => {
+    getPlayerImage(teamPlayers[i]).then( response => {
+      var label = document.createElement("label");
+      var input = document.createElement("input");
+
+      input.setAttribute("type","checkbox");
+      input.setAttribute("class", "flipInput");
+      input.setAttribute("data-field", i);
+      label.appendChild(input);
+
+      var card = document.createElement("div");
+      card.setAttribute("class","flip-card");
+      label.appendChild(card);
+
+      var first = document.createElement("div");
+      first.setAttribute("class","front")
+      card.appendChild(first);
+
+      var frontHeader = document.createElement("h2");
+      frontHeader.innerHTML = " front stats"
+      first.appendChild(frontHeader);
+      var frontP = document.createElement("p");
+      frontP.innerHTML = " front stats"
+      first.appendChild(frontP);
+
+      var second = document.createElement("div");
+      second.setAttribute("class","back");
+      card.appendChild(second);
+
+      var backHeader = document.createElement("h2");
+      backHeader.innerHTML = " back stats"
+      second.appendChild(backHeader);
+      var backP = document.createElement("p");
+      //backP.innerHTML
+      second.appendChild(backP);
+
+      var li = document.createElement("li")
+      li.appendChild(label);
+      cardItems.appendChild(li);
+
+      var cardImage = document.createElement('img');
+      cardImage.setAttribute('src', response.value[0].contentUrl);
+      cardImage.setAttribute("class", "card-image");
+      first.appendChild(cardImage);  
+    });
+  }, 334*i);
+}
+
+showCardBtn.addEventListener("click", function(){
+cardItems.innerHTML = "";
+playerStorage = [];
+for(let i = 0; i < 5; i++){
+  makeCards(i);
+}
+});
+
+getAllTeams();
+getTeam();
+
+
+/*
 function makeCard(i){
   setTimeout(() => {
     getPlayerImage(teamPlayers[i]).then( response => {
-      var li = document.createElement("li");
-      li.classList.add("statsList")
-      cardItems.appendChild(li);
-      li.innerHTML = "stats go here (li)"
-      var cardImage = document.createElement('img');
-      cardImage.setAttribute('src', response.value[0].contentUrl);
-      li.appendChild(cardImage);}  
-    );
+    var cardImage = document.createElement("img")
+    cardImage.setAttribute('src', response.value[0].contentUrl)
+    cardImage.classList.add("card-image");
+    var label = document.createElement("label");
+    var input = document.createElement("input");
+
+    input.setAttribute("type","checkbox")
+    input.setAttribute("class", "flipInput")
+    label.appendChild(input);
+
+  
+    var card = document.createElement("div");
+    card.setAttribute("class","flip-card");
+    label.appendChild(card);
+  
+    var first = document.createElement("div");
+    first.setAttribute("class","front")
+    card.appendChild(first);
+  
+    var frontHeader = document.createElement("h2");
+    frontHeader.innerHTML = " front stats"
+    first.appendChild(frontHeader);
+    var frontP = document.createElement("p");
+    frontP.innerHTML = " front stats"
+    first.appendChild(frontP);
+    first.appendChild(cardImage);
+  
+    var second = document.createElement("div");
+    second.setAttribute("class","back");
+    card.appendChild(second);
+
+    var backHeader = document.createElement("h2");
+    backHeader.innerHTML = " back stats"
+    second.appendChild(backHeader);
+    var backP = document.createElement("p");
+    backP.innerHTML = " back stats"
+    second.appendChild(backP);
+
+    var li = document.createElement("li")
+    li.appendChild(label);
+    cardItems.appendChild(li);
+
+    });
   }, 334*i);
 }
 
 var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn")
 
-function createCards(){
-  var label = document.createElement("label");
-  var input = document.createElement("input");
-
-  input.setAttribute("type","checkbox")
-  input.setAttribute("class", "flipInput")
-  label.appendChild(input);
-
-  var card = document.createElement("div");
-  card.setAttribute("class","flip-card");
-  label.appendChild(card);
-
-  var first = document.createElement("div");
-  first.setAttribute("class","front")
-  card.appendChild(first);
-  
-  var frontHeader = document.createElement("h2");
-  frontHeader.innerHTML = " front stats"
-  first.appendChild(frontHeader);
-  var frontP = document.createElement("p");
-  frontP.innerHTML = " front stats"
-  first.appendChild(frontP);
-  
-  var second = document.createElement("div");
-  second.setAttribute("class","back");
-  card.appendChild(second);
-
-  var backHeader = document.createElement("h2");
-  backHeader.innerHTML = " back stats"
-  second.appendChild(backHeader);
-  var backP = document.createElement("p");
-  backP.innerHTML = " back stats"
-  second.appendChild(backP);
-
-  var li = document.createElement("li")
-  li.appendChild(label);
-  cardItems.appendChild(li);
-}
-
 showCardBtn.addEventListener("click", function(){
-  for(let i = 0; i < teamPlayers.length; i++){
+  for(let i = 0; i < 3; i++){
     makeCard(i);
   }
 });
 
-getAllTeams();
-getTeam();
+
+
 
 /* old code 
 for(i=0; i < teamPlayers.length; i++){

@@ -23,7 +23,6 @@ var nbaUrl = "https://api-nba-v1.p.rapidapi.com";
 var nbaSettings = {};
 
 
-
 function setNBASettings(sentUrl) {
   nbaUrl = "https://api-nba-v1.p.rapidapi.com" + sentUrl;
   nbaSettings = {
@@ -42,7 +41,7 @@ function getAllTeams() {
   setNBASettings(toSendUrl);
 
   $.ajax(nbaSettings).done(function (response) {
-    //console.log(response);
+    console.log(response);
     for(var i = 0; i < response.response.length; i++)
       allTeams.unshift({teamName: response.response.name, teamId: response.response.id});
   });
@@ -53,7 +52,7 @@ function getTeam() {
   setNBASettings(toSendUrl);
 
   $.ajax(nbaSettings).done(function (response) {
-    //console.log(response);
+    console.log(response);
     teamPlayers = response.response;
   });
 }
@@ -155,7 +154,8 @@ var showCardBtn = document.querySelector(".showBtn")
 function createCards(){
   var label = document.createElement("label");
   var input = document.createElement("input");
-
+  input.setAttribute("data-field", i);
+  
   input.setAttribute("type","checkbox")
   input.setAttribute("class", "flipInput")
   label.appendChild(input)
@@ -194,14 +194,15 @@ function createCards(){
 showCardBtn.addEventListener("click", function(){
   for(i=0; i < teamPlayers.length; i++){
     createCards()
+    renderData()
   }
 }) 
 
 cardItems.addEventListener("click", function(event){
-  if(event.target.getAttribute('class') === "front"){
-    console.log(event.target.getAttribute('class'));
+  if(target.getAttribute('class') === "flipInput"){
+    getPlayerStats(teamPlayers[i])
     
-}
+  }
 })
 
 
@@ -221,3 +222,9 @@ getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);
+
+function renderStats(){
+  getPlayerStats(teamPlayers[i])
+}
+
+if(playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}));

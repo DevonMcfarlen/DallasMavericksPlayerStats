@@ -21,7 +21,7 @@ User's can look at the stats for all the Players displayed on the page, and can 
 ## Usage
 
 Link to the webpage: 
-![alt text]()
+![alt text](./assets/images/websiteSS.png)
 
 ## Authors
 

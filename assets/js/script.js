@@ -8,14 +8,19 @@ function setBingSettings(sentUrl) {
     url: bingUrl,
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'bc0130d05cmsh21fde0ce708a855p193539jsn96a834534fe7',
+      'X-RapidAPI-Key': '23621a63e4msha9fc92986a51b9fp1bfe54jsn18d7163659ca',
       'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
     },
   };
 }
 
 var teamPlayers = [];
-var userSeason = 2022; //this is a temporary value, it will be changed from the user input
+var userSeason = 0;
+var $form = $('.ui.selection.dropdown')
+  .dropdown()
+  selection = $form.form('get value')
+;
+
 var nbaSettings = {};
 
 function setNBASettings(sentUrl) {
@@ -32,10 +37,10 @@ function setNBASettings(sentUrl) {
 }
 
 function getTeam() {
-  let toSendUrl = "/players/" + "?" + "team=8&season=" + userSeason;
+  let toSendUrl = "/players/?team=8&season=" + userSeason;
   setNBASettings(toSendUrl);
 
-  $.ajax(nbaSettings).done(function (response) {
+  return $.ajax(nbaSettings).done(function (response) {
     console.log(response);
     teamPlayers = response.response;
   });
@@ -56,7 +61,7 @@ function getPlayerStats(userPlayer) {
     return;
   }
  
-  let toSendUrl = "/players/statistics" + "?" + "id=" + teamPlayers[userPlayer].id + "&season=" + userSeason;
+  let toSendUrl = "/players/statistics?id=" + teamPlayers[userPlayer].id + "&season=" + userSeason;
   setNBASettings(toSendUrl);
     
   return $.ajax(nbaSettings).done(function (response) {
@@ -105,6 +110,7 @@ function makeCards(i){
       var label = document.createElement("label");
       var input = document.createElement("input");
 
+      label.setAttribute("id", "parent")
       input.setAttribute("type","checkbox");
       input.setAttribute("class", "flipInput");
       input.setAttribute("data-field", i);
@@ -119,46 +125,47 @@ function makeCards(i){
       card.appendChild(first);
 
       var frontHeader = document.createElement("h2");
-      frontHeader.innerHTML = " front stats"
+      frontHeader.innerHTML = player.firstname + " " + player.lastname;
       first.appendChild(frontHeader);
+
       var frontP = document.createElement("p");
-      frontP.innerHTML = " front stats"
+      if(player.leagues.standard.jersey == null)
+        frontP.innerHTML = "No Jersey # Available";
+      else
+        frontP.innerHTML = "Jersey #: " + player.leagues.standard.jersey;
       first.appendChild(frontP);
+
+      var cardImage = document.createElement('img');
+      cardImage.setAttribute('src', response.value[0].contentUrl);
+      cardImage.setAttribute('class', 'card-image');
+      first.appendChild(cardImage);  
 
       var second = document.createElement("div");
       second.setAttribute("class","back");
       card.appendChild(second);
 
       var backHeader = document.createElement("h2");
-      backHeader.innerHTML = " back stats"
+      backHeader.innerHTML = "Average Season Stats"
       second.appendChild(backHeader);
       var backP = document.createElement("p");
-        //backP.innerHTML
       second.appendChild(backP);
 
       var li = document.createElement("li")
       li.appendChild(label);
       cardItems.appendChild(li);
-
-      var cardImage = document.createElement('img');
-      cardImage.setAttribute('src', response.value[0].contentUrl);
-      cardImage.setAttribute('class', 'card-image');
-      first.appendChild(cardImage);  
       });
-    }, 400*i);
+    }, 370*i);
   }
-var 
-$form = $('.ui.selection.dropdown')
-  userSeason = $form.form('get value', 'season')
-;
 
 showCardBtn.addEventListener("click", function(event){
+  userSeason = selection[0].children[0].getAttribute('value');
   console.log(userSeason);
   cardItems.innerHTML = "";
   playerStorage = [];
-  for(let i = 0; i < 1; i++){
-    makeCards(i);
-  }
+  getTeam().then( response => {
+    for(let i = 0; i < teamPlayers.length; i++){
+      makeCards(i);
+  }});
 });
 
 cardItems.addEventListener("click", function(event){
@@ -176,5 +183,3 @@ cardItems.addEventListener("click", function(event){
     });
   }
 })
-
-getTeam();

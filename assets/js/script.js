@@ -1,4 +1,3 @@
-
 var bingSettings = {};
 
 function setBingSettings(sentUrl) {
@@ -22,8 +21,6 @@ var userSeason = 2022; //this is a temporary value, it will be changed from the 
 var userPlayer = 3; //this is a temporary value, it will be changed from user input
 var nbaUrl = "https://api-nba-v1.p.rapidapi.com";
 var nbaSettings = {};
-
-
 
 function setNBASettings(sentUrl) {
   nbaUrl = "https://api-nba-v1.p.rapidapi.com" + sentUrl;
@@ -108,66 +105,57 @@ function getPlayerStats() {
 
 var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn");
-var cardImage = document.querySelector(".player-card");
 
-var finished = false;
+function getPlayerImage(player) {
+  let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname;
+  setBingSettings(toSendUrl);
 
-async function getPlayerImage(player) {
-    let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname;
-    setBingSettings(toSendUrl);
-
-    $.ajax(bingSettings).done(function (response) {
+  return $.ajax(bingSettings).done(function (response) {
     console.log(response);
-    if (response.value && response.value.length > 0) {
-      return response.value[0].contentUrl;
-    } else {
-      console.log("No image found for player");
-    }
-    
-    //finished = true;
-    //playerImage = response.value[0].contentUrl
-
   });
 }
-    //return playerImage;
 
-async function displayPlayerImage(player) {
-  try {
-    var playerImage = await getPlayerImage(player);
-    if (playerImage) {
-    var imageDisplay = document.createElement('img');
-    imageDisplay.setAttribute('src', playerImage);
-    cardImage.appendChild(imageDisplay);
-  }
-}   catch (error) {
-      console.log(error);
+function makeCard(i){
+  setTimeout(() => {
+    getPlayerImage(teamPlayers[i]).then( response => {
+      var li = document.createElement("li");
+      li.classList.add("statsList")
+      cardItems.appendChild(li);
+      li.innerHTML = "stats go here (li)"
+      var cardImage = document.createElement('img');
+      cardImage.setAttribute('src', response.value[0].contentUrl);
+      li.appendChild(cardImage);}  
+    );
+  }, 334*i);
 }
-}
-
 
 showCardBtn.addEventListener("click", function(){
-  for(i=0; i < teamPlayers.length; i++){
+  for(let i = 0; i < teamPlayers.length; i++){
+    makeCard(i);
+  }
+});
+
+getAllTeams();
+getTeam();
+
+/*
+for(i=0; i < teamPlayers.length; i++){
     var li = document.createElement("li");
     li.classList.add("statsList")
     cardItems.appendChild(li);
     li.innerHTML = "stats go here (li)"
     displayPlayerImage(teamPlayers[i]);
+
     // displayPlayerImage(teamPlayers[i]);
-    // li.appendChild(cardImage);
+    li.appendChild(cardImage);
   }
-})
 
 
-
-getAllTeams();
-
-getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);
 
 
-/*
   for var (i = 0; i < teamPlayers.length; i++) {
 
   }

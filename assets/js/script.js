@@ -121,7 +121,7 @@ async function getPlayerImage(player) {
     $.ajax(bingSettings).done(function (response) {
     console.log(response);
     if (response.value && response.value.length > 0) {
-      resolve(response.value[0].contentUrl);
+      return response.value[0].contentUrl
     } else {
       console.log("No image found for player");
     }

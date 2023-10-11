@@ -8,7 +8,7 @@ function setBingSettings(sentUrl) {
     url: bingUrl,
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': '09e77c0237msh7cf79c6d0985d69p119f9cjsnb5866ab39fe8',
+      'X-RapidAPI-Key': 'bc0130d05cmsh21fde0ce708a855p193539jsn96a834534fe7',
       'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
     },
   };

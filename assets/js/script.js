@@ -146,7 +146,7 @@ for(i=0; i < teamPlayers.length; i++){
     li.innerHTML = "stats go here (li)"
     displayPlayerImage(teamPlayers[i]);
 
-    // displayPlayerImage(teamPlayers[i]);
+    //displayPlayerImage(teamPlayers[i]);
     li.appendChild(cardImage);
   }
 
@@ -154,23 +154,3 @@ for(i=0; i < teamPlayers.length; i++){
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);
-
-
-/*
-  for var (i = 0; i < teamPlayers.length; i++) {
-
-  }
-    var imageUrl = response.value[0].contentUrl;
-
-    var img = document.createElement("img");
-    img.src = imageUrl;
-
-    var cardItems = document.querySelectorAll(".card-items li");
-    if (cardItems[index]) {
-      cardItems[index].appendChild(img);
-    } else {
-      console.log('No image found for player ' + teamPlayers[player].firstname + '' + teamPlayers[player].lastname);
-    }
-  }
-});
-*/

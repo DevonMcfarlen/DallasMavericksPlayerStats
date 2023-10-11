@@ -1,4 +1,4 @@
-
+/*
 var bingSettings = {};
 
 function setBingSettings(sentUrl) {
@@ -113,15 +113,13 @@ var cardImage = document.querySelector(".player-card");
 var finished = false;
 
 async function getPlayerImage(player) {
-    let toSendUrl = 'professional+headshot+of+' + teamPlayers[player].firstname + '+' + teamPlayers[player].lastname;
+    let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname;
     setBingSettings(toSendUrl);
-
-    var playerImage = "";
 
     $.ajax(bingSettings).done(function (response) {
     console.log(response);
     if (response.value && response.value.length > 0) {
-      return response.value[0].contentUrl
+      return response.value[0].contentUrl;
     } else {
       console.log("No image found for player");
     }
@@ -149,13 +147,13 @@ async function displayPlayerImage(player) {
 
 showCardBtn.addEventListener("click", function(){
   for(i=0; i < teamPlayers.length; i++){
-  var li = document.createElement("li");
-  li.classList.add("statsList")
-  cardItems.appendChild(li);
-  li.innerHTML = "stats go here (li)"
-  displayPlayerImage();
-  // displayPlayerImage(teamPlayers[i]);
-  // li.appendChild(cardImage);
+    var li = document.createElement("li");
+    li.classList.add("statsList")
+    cardItems.appendChild(li);
+    li.innerHTML = "stats go here (li)"
+    displayPlayerImage(teamPlayers[i]);
+    // displayPlayerImage(teamPlayers[i]);
+    // li.appendChild(cardImage);
   }
 })
 
@@ -167,23 +165,4 @@ getTeam();
 //setTimeout(() => {getPlayerStats();}, 1000);
 //setTimeout(() => {getPlayerStats();}, 5000);
 //setTimeout(() => {getPlayerImage(0);}, 1000);
-
-
-/*
-  for var (i = 0; i < teamPlayers.length; i++) {
-
-  }
-    var imageUrl = response.value[0].contentUrl;
-
-    var img = document.createElement("img");
-    img.src = imageUrl;
-
-    var cardItems = document.querySelectorAll(".card-items li");
-    if (cardItems[index]) {
-      cardItems[index].appendChild(img);
-    } else {
-      console.log('No image found for player ' + teamPlayers[player].firstname + '' + teamPlayers[player].lastname);
-    }
-  }
-});
 */

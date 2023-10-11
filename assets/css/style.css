@@ -47,9 +47,6 @@ p {
     width:20vw;
     height:25vw;
     margin:20px;
-    background-image: url(/assets/images/back-ground-picture.png);
-    background-repeat: repeat;
-    background-size: cover;
     border-radius: 30px;
     border-style: solid;
     border-color: rgba(255, 255, 255, 0.6);

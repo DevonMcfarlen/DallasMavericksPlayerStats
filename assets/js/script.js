@@ -200,8 +200,10 @@ showCardBtn.addEventListener("click", function(){
 cardItems.addEventListener("click", function(event){
   if(event.target.getAttribute('class') === "front"){
     console.log(event.target.getAttribute('class'));
-  }
+    
+}
 })
+
 
 /*
 showCardBtn.addEventListener("click", function(){

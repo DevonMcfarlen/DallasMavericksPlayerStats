@@ -1,3 +1,4 @@
+/*
 var bingSettings = {};
 
 function setBingSettings(sentUrl) {
@@ -107,7 +108,7 @@ var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn");
 
 function getPlayerImage(player) {
-  let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname;
+  let toSendUrl = 'professional+headshots+of+' + player.firstname + '+' + player.lastname + '+from+espn.com+bio';
   setBingSettings(toSendUrl);
 
   return $.ajax(bingSettings).done(function (response) {
@@ -117,7 +118,8 @@ function getPlayerImage(player) {
 
 function makeCards(i){
   setTimeout(() => {
-    getPlayerImage(teamPlayers[i]).then( response => {
+    var player = teamPlayers[i]
+    getPlayerImage(player).then( response => {
       var label = document.createElement("label");
       var input = document.createElement("input");
 
@@ -136,10 +138,10 @@ function makeCards(i){
       card.appendChild(first);
 
       var frontHeader = document.createElement("h2");
-      frontHeader.innerHTML = " front stats"
+      frontHeader.innerHTML = player.firstname + " " + player.lastname;
       first.appendChild(frontHeader);
       var frontP = document.createElement("p");
-      frontP.innerHTML = " front stats"
+      //frontP.innerHTML = "Jersey #: " + response.leagues.standard.jersey;
       first.appendChild(frontP);
 
       var second = document.createElement("div");
@@ -189,147 +191,4 @@ cardItems.addEventListener("click", function(event){
 
 getAllTeams();
 getTeam();
-
-
-/*
-function makeCard(i){
-  setTimeout(() => {
-    getPlayerImage(teamPlayers[i]).then( response => {
-    var cardImage = document.createElement("img")
-    cardImage.setAttribute('src', response.value[0].contentUrl)
-    cardImage.classList.add("card-image");
-    var label = document.createElement("label");
-    var input = document.createElement("input");
-
-    input.setAttribute("type","checkbox")
-    input.setAttribute("class", "flipInput")
-    label.appendChild(input);
-
-  
-    var card = document.createElement("div");
-    card.setAttribute("class","flip-card");
-    label.appendChild(card);
-  
-    var first = document.createElement("div");
-    first.setAttribute("class","front")
-    card.appendChild(first);
-  
-    var frontHeader = document.createElement("h2");
-    frontHeader.innerHTML = " front stats"
-    first.appendChild(frontHeader);
-    var frontP = document.createElement("p");
-    frontP.innerHTML = " front stats"
-    first.appendChild(frontP);
-    first.appendChild(cardImage);
-  
-    var second = document.createElement("div");
-    second.setAttribute("class","back");
-    card.appendChild(second);
-
-    var backHeader = document.createElement("h2");
-    backHeader.innerHTML = " back stats"
-    second.appendChild(backHeader);
-    var backP = document.createElement("p");
-    backP.innerHTML = " back stats"
-    second.appendChild(backP);
-
-    var li = document.createElement("li")
-    li.appendChild(label);
-    cardItems.appendChild(li);
-
-    });
-  }, 334*i);
-}
-
-var cardItems = document.querySelector(".card-items");
-var showCardBtn = document.querySelector(".showBtn")
-
-function createCards(){
-  var label = document.createElement("label");
-  var input = document.createElement("input");
-  input.setAttribute("data-field", i);
-  
-  input.setAttribute("type","checkbox")
-  input.setAttribute("class", "flipInput")
-  label.appendChild(input)
-
-  var card = document.createElement("div");
-  card.setAttribute("class","flip-card");
-  label.appendChild(card);
-
-  var first = document.createElement("div");
-  first.setAttribute("class","front")
-  card.appendChild(first);
-
-  var frontHeader = document.createElement("h2");
-  frontHeader.innerHTML = " front stats"
-  first.appendChild(frontHeader);
-  var frontP = document.createElement("p");
-  frontP.innerHTML = " front stats"
-  first.appendChild(frontP);
-
-  var second = document.createElement("div");
-  second.setAttribute("class","back");
-  card.appendChild(second);
-
-  var backHeader = document.createElement("h2");
-  backHeader.innerHTML = " back stats"
-  second.appendChild(backHeader);
-  var backP = document.createElement("p");
-  //backP.innerHTML
-  second.appendChild(backP);
-
-  var li = document.createElement("li")
-  li.appendChild(label);
-  cardItems.appendChild(li);
-  }
-
-showCardBtn.addEventListener("click", function(){
-  for(let i = 0; i < 3; i++){
-    makeCard(i);
-  }
-});
-
-
-
-
-/* old code 
-for(i=0; i < teamPlayers.length; i++){
-    var li = document.createElement("li");
-    li.classList.add("statsList")
-    cardItems.appendChild(li);
-    li.innerHTML = "stats go here (li)"
-    displayPlayerImage(teamPlayers[i]);
-
-    //displayPlayerImage(teamPlayers[i]);
-    li.appendChild(cardImage);
-  for(i=0; i < teamPlayers.length; i++){
-    createCards()
-    renderData()
-  }
-}) 
-
-cardItems.addEventListener("click", function(event){
-  if(target.getAttribute('class') === "flipInput"){
-    getPlayerStats(teamPlayers[i])
-    
-  }
-})
-
-
-/*
-showCardBtn.addEventListener("click", function(){
-  displayPlayerImage(teamPlayers[i]);
-  li.appendChild(cardImage);
-  }
-)
 */
-
-
-
-getAllTeams();
-
-getTeam();
-//setTimeout(() => {getPlayerStats();}, 1000);
-//setTimeout(() => {getPlayerStats();}, 5000);
-//setTimeout(() => {getPlayerImage(0);}, 1000);

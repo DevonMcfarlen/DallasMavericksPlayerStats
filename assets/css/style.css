@@ -5,7 +5,12 @@ body{
 h1{
     text-align: center;
     font-family: 'Arvo', serif;
+    color: white;
     font-size: xx-large;
+}
+
+p {
+    font-size: 24px;
 }
 
 .searchInput{
@@ -40,22 +45,37 @@ h1{
     transition:all 0.5s ease-in-out;
     z-index:1;
     width:20vw;
-    height:40vh;
+    height:25vw;
     margin:20px;
-    background-image: url(/assets/css/back-ground\ picture.png);
+    background-image: url(/assets/images/back-ground\ picture.png);
     background-repeat: repeat;
     background-size: cover;
     border-radius: 30px;
+    border-style: solid;
+    border-color: rgba(255, 255, 255, 0.6);
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-.flip-card .front,
+.flip-card .front{
+    color: whitesmoke;
+    position:absolute;
+    margin-top: 20px;
+    width:100%;
+    height:100%;
+    text-align: center;
+    backface-visibility: hidden;
+}
+
+
 .flip-card .back{
+    display: flex;
+    flex-direction: column;
     color: whitesmoke;
     position:absolute;
     width:100%;
     height:100%;
     text-align: center;
+    justify-content: center;
     backface-visibility: hidden;
 }
 .flip-card .back{
@@ -68,16 +88,6 @@ h1{
 
 :checked + .flip-card{
     transform:rotateX(180deg);
-}
-
-
-
-.statsList{
-    list-style:none;
-    border:2px solid blue;
-    width:35vh;
-    height:20vw;
-    margin:10px;
 }
 
 .card-items{

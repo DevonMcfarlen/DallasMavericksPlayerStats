@@ -1,30 +1,30 @@
-/*
 var bingSettings = {};
 
 function setBingSettings(sentUrl) {
-  bingUrl = "https://bing-image-search1.p.rapidapi.com/images/search?q=" + sentUrl;
+  var bingUrl = "https://bing-image-search1.p.rapidapi.com/images/search?q=" + sentUrl;
   bingSettings = {
     async: true,
     crossDomain: true,
     url: bingUrl,
     method: 'GET',
     headers: {
-      'X-RapidAPI-Key': 'bc0130d05cmsh21fde0ce708a855p193539jsn96a834534fe7',
+      'X-RapidAPI-Key': '23621a63e4msha9fc92986a51b9fp1bfe54jsn18d7163659ca',
       'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
     },
   };
 }
 
-var allTeams = [];
 var teamPlayers = [];
-var userTeam = 8; //this is a temporary value, it will be changed from user input
-var userSeason = 2022; //this is a temporary value, it will be changed from the user input
-var userPlayer = 3; //this is a temporary value, it will be changed from user input
-var nbaUrl = "https://api-nba-v1.p.rapidapi.com";
+var userSeason = 0;
+var $form = $('.ui.selection.dropdown')
+  .dropdown()
+  selection = $form.form('get value')
+;
+
 var nbaSettings = {};
 
 function setNBASettings(sentUrl) {
-  nbaUrl = "https://api-nba-v1.p.rapidapi.com" + sentUrl;
+  var nbaUrl = "https://api-nba-v1.p.rapidapi.com" + sentUrl;
   nbaSettings = {
     "url": nbaUrl,
     "method": "GET",
@@ -36,23 +36,11 @@ function setNBASettings(sentUrl) {
   };
 }
 
-function getAllTeams() {
-  let toSendUrl = "/teams";
-  setNBASettings(toSendUrl);
-
-  $.ajax(nbaSettings).done(function (response) {
-    console.log(response);
-    for(var i = 0; i < response.response.length; i++)
-      allTeams.unshift({teamName: response.response.name, teamId: response.response.id});
-  });
-}
-
 function getTeam() {
-  let toSendUrl = "/players/" + "?" + "team=" + userTeam + "&season=" + userSeason;
+  let toSendUrl = "/players/?team=8&season=" + userSeason;
   setNBASettings(toSendUrl);
 
-  $.ajax(nbaSettings).done(function (response) {
-    console.log(response);
+  return $.ajax(nbaSettings).done(function (response) {
     teamPlayers = response.response;
   });
 }
@@ -65,17 +53,16 @@ var playerStats = {
 };
 
 var playerStorage = [];
-console.log(playerStorage)
-function getPlayerStats() {
+function getPlayerStats(userPlayer) {
   if(playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}))
   {
     console.log("found duplicate player");
     return;
   }
  
-  let toSendUrl = "/players/statistics" + "?" + "id=" + teamPlayers[userPlayer].id + "&season=" + userSeason;
+  let toSendUrl = "/players/statistics?id=" + teamPlayers[userPlayer].id + "&season=" + userSeason;
   setNBASettings(toSendUrl);
-
+    
   return $.ajax(nbaSettings).done(function (response) {
     var playerGames = response.response;
     var pGLength = playerGames.length;
@@ -90,17 +77,13 @@ function getPlayerStats() {
       tTotReb += playerGames[i].totReb
       tFGP += parseFloat(playerGames[i].fgp);
     }
-    
-    playerStats.aPoints = tPoints/pGLength;
-    playerStats.aAssists = tAssists/pGLength;
-    playerStats.aTotReb = tTotReb/pGLength;
-    playerStats.aFGP = tFGP/pGLength;
-
+      
+    playerStats.aPoints = Math.round((((tPoints/pGLength)) + Number.EPSILON) * 100) / 100;
+    playerStats.aAssists = Math.round((((tAssists/pGLength)) + Number.EPSILON) * 100) / 100;
+    playerStats.aTotReb = Math.round((((tTotReb/pGLength)) + Number.EPSILON) * 100) / 100;
+    playerStats.aFGP = Math.round((((tTotReb/pGLength)) + Number.EPSILON) * 100) / 100;
+  
     playerStorage.unshift({id: response.parameters.id, stats: playerStats});
-    
-    console.log(response);
-    console.log(playerStats);
-    console.log(playerStorage);
   });
 }
 
@@ -108,87 +91,92 @@ var cardItems = document.querySelector(".card-items");
 var showCardBtn = document.querySelector(".showBtn");
 
 function getPlayerImage(player) {
-  let toSendUrl = 'professional+headshots+of+' + player.firstname + '+' + player.lastname + '+from+espn.com+bio';
+  let toSendUrl = 'professional+headshot+of+' + player.firstname + '+' + player.lastname + '+from+espn.com+bio';
   setBingSettings(toSendUrl);
 
-  return $.ajax(bingSettings).done(function (response) {
-    console.log(response);
-  });
+  return $.ajax(bingSettings).done(function (response) {});
 }
+
+var cardItems = document.querySelector(".card-items");
+var showCardBtn = document.querySelector(".showBtn")
 
 function makeCards(i){
   setTimeout(() => {
-    var player = teamPlayers[i]
-    getPlayerImage(player).then( response => {
-      var label = document.createElement("label");
-      var input = document.createElement("input");
+  var player = teamPlayers[i];
+  getPlayerImage(player).then( response => {
+    var label = document.createElement("label");
+    var input = document.createElement("input");
 
-      label.setAttribute("id", "parent")
-      input.setAttribute("type","checkbox");
-      input.setAttribute("class", "flipInput");
-      input.setAttribute("data-field", i);
-      label.appendChild(input);
+    label.setAttribute("id", "parent")
+    input.setAttribute("type","checkbox");
+    input.setAttribute("class", "flipInput");
+    input.setAttribute("data-field", i);
+    label.appendChild(input);
 
-      var card = document.createElement("div");
-      card.setAttribute("class","flip-card");
-      label.appendChild(card);
+    var card = document.createElement("div");
+    card.setAttribute("class","flip-card");
+    label.appendChild(card);
 
-      var first = document.createElement("div");
-      first.setAttribute("class","front")
-      card.appendChild(first);
+    var first = document.createElement("div");
+    first.setAttribute("class","front")
+    card.appendChild(first);
 
-      var frontHeader = document.createElement("h2");
-      frontHeader.innerHTML = player.firstname + " " + player.lastname;
-      first.appendChild(frontHeader);
-      var frontP = document.createElement("p");
-      //frontP.innerHTML = "Jersey #: " + response.leagues.standard.jersey;
-      first.appendChild(frontP);
+    var frontHeader = document.createElement("h2");
+    frontHeader.innerHTML = player.firstname + " " + player.lastname;
+    first.appendChild(frontHeader);
 
-      var second = document.createElement("div");
-      second.setAttribute("class","back");
-      card.appendChild(second);
+    var frontP = document.createElement("p");
+    if(player.leagues.standard.jersey == null)
+      frontP.innerHTML = "No Jersey # Available";
+    else
+      frontP.innerHTML = "Jersey #: " + player.leagues.standard.jersey;
+    first.appendChild(frontP);
 
-      var backHeader = document.createElement("h2");
-      backHeader.innerHTML = " back stats"
-      second.appendChild(backHeader);
-      var backP = document.createElement("p");
-      backP
-      second.appendChild(backP);
+    var cardImage = document.createElement('img');
+    cardImage.setAttribute('src', response.value[0].contentUrl);
+    cardImage.setAttribute('class', 'card-image');
+    first.appendChild(cardImage);  
 
-      var li = document.createElement("li")
-      li.appendChild(label);
-      cardItems.appendChild(li);
+    var second = document.createElement("div");
+    second.setAttribute("class","back");
+    card.appendChild(second);
 
-      var cardImage = document.createElement('img');
-      cardImage.setAttribute('src', response.value[0].contentUrl);
-      cardImage.setAttribute("class", "card-image");
-      first.appendChild(cardImage);  
+    var backHeader = document.createElement("h2");
+    backHeader.innerHTML = "Average Season Stats"
+    second.appendChild(backHeader);
+    var backP = document.createElement("p");
+    second.appendChild(backP);
+
+    var li = document.createElement("li")
+    li.appendChild(label);
+    cardItems.appendChild(li);
     });
-  }, 334*i);
+  }, 370*i);
 }
 
-showCardBtn.addEventListener("click", function(){
-cardItems.innerHTML = "";
-playerStorage = [];
-for(let i = 0; i < 5; i++){
-  makeCards(i);
-}
+showCardBtn.addEventListener("click", function(event){
+  userSeason = selection[0].children[0].getAttribute('value');
+  if(userSeason !== ""){
+    cardItems.innerHTML = "";
+    playerStorage = [];
+    getTeam().then( response => {
+      for(let i = 0; i < teamPlayers.length; i++){
+        makeCards(i);
+    }});
+  }
 });
 
 cardItems.addEventListener("click", function(event){
   var target = event.target;
   if(target.getAttribute('class') === "flipInput"){
-   console.log(target.getAttribute("data-field"))
-   userPlayer = target.getAttribute("data-field")
-   getPlayerStats().then(response => {
-    var stats = playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}).stats
-    var showStats = document.getElementById("parent").children[1].children[1].children[1];
-    showStats.innerHTML ="Avg assits: " + stats.aAssists + " <br> " + "Avg FGP: " + stats.aFGP + "<br> " + "Avg points: " + stats.aPoints + "<br> " + "Avg total rebounds: " + stats.aTotReb;
-   })
-  
+    var userPlayer = target.getAttribute('data-field');
+    getPlayerStats(userPlayer).then( response => {
+      var backOfCardText = target.parentElement.children[1].children[1].children[1];
+      var stats = playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}).stats;
+      backOfCardText.innerHTML = "Average Points: " + stats.aPoints + "<br>" +
+                                 "Average Assists: " + stats.aAssists + "<br>" +
+                                 "Average Rebounds: " + stats.aTotReb + "<br>" +
+                                 "Average FGP: " + stats.aFGP + "<br>";
+    });
   }
 })
-
-getAllTeams();
-getTeam();
-*/

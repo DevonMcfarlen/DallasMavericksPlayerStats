@@ -16,18 +16,38 @@
     ></script>
     <script src="./assets/Semantic-UI-CSS-master/semantic.min.js"></script>
   </head>
-  <div class="main">
-    <header>
-      <h1>Dallas Mavericks Player Statistics</h1>
-    </header>
-    <div class="search-engine">
-      <div class="ui action input">
-        <input class="searchInput" type="text" placeholder="Select a Team">
-        <button class="ui button">Select</button>
-      </div>
-    </div>
-  </div>
+
   <body>
+    <section class="main-header">
+      <header>
+        <h1 class="second-page">Dallas Maverick's Player Statistics</h1>
+      </header>
+      <div class="ui action input secondheader">
+        <div class="field">
+          <div class="ui selection dropdown">
+            <input type="hidden" name="season">
+            <i class="dropdown icon"></i>
+            <div class="default text">Pick a Season</div>
+            <div class="menu">
+              <div class="item" data-value="2022">2022</div>
+              <div class="item" data-value="2021">2021</div>
+              <div class="item" data-value="2020">2020</div>
+              <div class="item" data-value="2019">2019</div>
+              <div class="item" data-value="2018">2018</div>
+              <div class="item" data-value="2017">2017</div>
+              <div class="item" data-value="2016">2016</div>
+              <div class="item" data-value="2015">2015</div>
+            </div>
+          </div>
+          <div class="ui submit button showBtn">Search</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="player-cards">
+      <ul class="card-items">
+      </ul>
+    </div>
     <script src="assets/js/script.js"></script>
   </body>
 </html>

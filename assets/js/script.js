@@ -148,8 +148,8 @@ function makeCards(i){
     }, 400*i);
   }
 var 
-$form = $('.ui.compact.selection.dropdown')
-  userSeason = $form.form('get value', 'value')
+$form = $('.ui.selection.dropdown')
+  userSeason = $form.form('get value', 'season')
 ;
 
 showCardBtn.addEventListener("click", function(event){

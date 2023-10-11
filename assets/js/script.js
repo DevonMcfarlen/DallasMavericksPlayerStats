@@ -12,7 +12,7 @@ function setBingSettings(sentUrl) {
       'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
     },
   };
-}*/
+}
 
 var allTeams = [];
 var teamPlayers = [];

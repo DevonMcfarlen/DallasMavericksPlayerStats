@@ -76,7 +76,7 @@ function getPlayerStats() {
   let toSendUrl = "/players/statistics" + "?" + "id=" + teamPlayers[userPlayer].id + "&season=" + userSeason;
   setNBASettings(toSendUrl);
 
-  $.ajax(nbaSettings).done(function (response) {
+  return $.ajax(nbaSettings).done(function (response) {
     var playerGames = response.response;
     var pGLength = playerGames.length;
     var tPoints = 0;
@@ -123,6 +123,7 @@ function makeCards(i){
       var label = document.createElement("label");
       var input = document.createElement("input");
 
+      label.setAttribute("id", "parent")
       input.setAttribute("type","checkbox");
       input.setAttribute("class", "flipInput");
       input.setAttribute("data-field", i);
@@ -151,7 +152,7 @@ function makeCards(i){
       backHeader.innerHTML = " back stats"
       second.appendChild(backHeader);
       var backP = document.createElement("p");
-      //backP.innerHTML
+      backP
       second.appendChild(backP);
 
       var li = document.createElement("li")
@@ -178,7 +179,13 @@ cardItems.addEventListener("click", function(event){
   var target = event.target;
   if(target.getAttribute('class') === "flipInput"){
    console.log(target.getAttribute("data-field"))
-    
+   userPlayer = target.getAttribute("data-field")
+   getPlayerStats().then(response => {
+    var stats = playerStorage.find(obj => {return obj.id == teamPlayers[userPlayer].id}).stats
+    var showStats = document.getElementById("parent").children[1].children[1].children[1];
+    showStats.innerHTML ="Avg assits: " + stats.aAssists + " <br> " + "Avg FGP: " + stats.aFGP + "<br> " + "Avg points: " + stats.aPoints + "<br> " + "Avg total rebounds: " + stats.aTotReb;
+   })
+  
   }
 })
 

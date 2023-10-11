@@ -140,7 +140,7 @@ function makeCards(i){
       frontHeader.innerHTML = player.firstname + " " + player.lastname;
       first.appendChild(frontHeader);
       var frontP = document.createElement("p");
-      frontP.innerHTML = "Jersey #: " + response.leagues.standard.jersey;
+      //frontP.innerHTML = "Jersey #: " + response.leagues.standard.jersey;
       first.appendChild(frontP);
 
       var second = document.createElement("div");

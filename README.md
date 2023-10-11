@@ -20,7 +20,14 @@ User's can look at the stats for all the Players displayed on the page, and can 
 
 ## Usage
 
-Link to the webpage: 
+When you first load up the page, it will be empty except for the text and the dropdown menu.
+After selecting a date and pressing search, the page will fill with cards displaying the player's name,
+their jersey number (if available), and a picture of them. If you click on a card it will flip it over,
+and some text will appear displaying their average stats for every game they played in that season.
+Clicking on the card again will flip it back over. And if you want to look at a different season, you
+just need to change the input field and press search again!
+
+Link to the webpage: [Dallas Mavericks Player Stats](https://devonmcfarlen.github.io/DallasMavericksPlayerStats/)
 ![alt text](./assets/images/websiteSS.png)
 
 ## Authors

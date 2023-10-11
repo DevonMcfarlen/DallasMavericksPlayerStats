@@ -28,6 +28,15 @@ h1{
     margin-bottom:25px;
 }
 
+.card-image {
+    max-width: 100%;
+    max-height: 100px;
+    width: auto;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
 .flip-card {
     position:relative;
     width:100%;

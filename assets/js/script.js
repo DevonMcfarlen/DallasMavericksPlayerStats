@@ -96,7 +96,7 @@ function getPlayerStats() {
     playerStats.aFGP = tFGP/pGLength;
 
     playerStorage.unshift({id: response.parameters.id, stats: playerStats});
-
+    
     console.log(response);
     console.log(playerStats);
     console.log(playerStorage);
@@ -138,7 +138,7 @@ function createCards(){
 
   input.setAttribute("type","checkbox")
   input.setAttribute("class", "flipInput")
-  label.appendChild(input)
+  label.appendChild(input);
 
   var card = document.createElement("div");
   card.setAttribute("class","flip-card");
@@ -147,14 +147,14 @@ function createCards(){
   var first = document.createElement("div");
   first.setAttribute("class","front")
   card.appendChild(first);
-
+  
   var frontHeader = document.createElement("h2");
   frontHeader.innerHTML = " front stats"
   first.appendChild(frontHeader);
   var frontP = document.createElement("p");
   frontP.innerHTML = " front stats"
   first.appendChild(frontP);
-
+  
   var second = document.createElement("div");
   second.setAttribute("class","back");
   card.appendChild(second);
@@ -169,7 +169,7 @@ function createCards(){
   var li = document.createElement("li")
   li.appendChild(label);
   cardItems.appendChild(li);
-  }
+}
 
 showCardBtn.addEventListener("click", function(){
   for(let i = 0; i < teamPlayers.length; i++){
@@ -180,7 +180,7 @@ showCardBtn.addEventListener("click", function(){
 getAllTeams();
 getTeam();
 
-/*
+/* old code 
 for(i=0; i < teamPlayers.length; i++){
     var li = document.createElement("li");
     li.classList.add("statsList")
